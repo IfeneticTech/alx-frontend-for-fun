@@ -16,6 +16,7 @@ Example:
 import argparse
 import pathlib
 import re
+import sys  # Added sys import
 
 
 def convert_md_to_html(input_file, output_file):
@@ -38,7 +39,9 @@ def convert_md_to_html(input_file, output_file):
             # Append the HTML equivalent of the heading
             html_content.append(f'<h{h_level}>{h_content}</h{h_level}>\n')
         else:
-            html_content.append(line)
+            # Optionally wrap non-heading lines in <p> tags
+            if line.strip():  # Avoid empty lines
+                html_content.append(f'<p>{line.strip()}</p>\n')
 
     # Write the HTML content to the output file
     with open(output_file, 'w', encoding='utf-8') as f:
